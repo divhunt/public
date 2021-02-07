@@ -4,10 +4,10 @@
 
     $app = new classes\Core\App(function($app)
     {
-        $app->setConfig('path', __DIR__);
-        $app->setConfig('name', 'Quantox Test');
-        $app->setConfig('domain', 'quantox.test');
-        $app->setConfig('domain_full', 'http://' . $app->getConfig('domain') . '/');
+        $app->setConfig('path', __DIR__)
+            ->setConfig('name', 'Quantox Test')
+            ->setConfig('domain', 'quantox.test')
+            ->setConfig('domain_full', 'http://' . $app->getConfig('domain') . '/');
 
         $app->setProperty('route', new classes\App\Route);
     });
