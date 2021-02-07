@@ -4,10 +4,12 @@
 
     $app = new classes\Core\App();
 
-    $app->set('path', __DIR__)
-        ->set('domain', 'quantox.test');
+    $app->set('path', __DIR__);
+    $app->set('domain', 'quantox.test');
 
-    print_r($app);
+    $connection = new classes\Database\Connection('localhost', 'root', '', 'quantox');
+    $connection->connect();
+
 
     // $app->set('path', __DIR__);
 
