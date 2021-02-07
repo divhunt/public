@@ -2,7 +2,9 @@
 
     namespace classes\Core;
 
-    class App
+    use classes\Core\Config as Config;
+
+    class App extends Config
     {
         public function hi()
         {

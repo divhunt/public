@@ -4,13 +4,21 @@
 
     class Autoloader
     {
+        /*
+         * Define src path
+         */
+
         protected static $path = __DIR__ . '/../../';
 
-        public static function register($name)
+        /*
+         * Autoload files
+         */
+
+        public static function register(string $name) : void
         {
             if(!$name = self::registerProcessName($name))
             {
-                return false;
+                return;
             }
 
             if(file_exists(self::$path . $name))
@@ -19,7 +27,11 @@
             }
         }
 
-        private static function registerProcessName($name)
+        /*
+         * Process autoload file name
+         */
+
+        private static function registerProcessName(string $name) : string
         {
             $name = explode('\\', $name);
             $data = ['ext' => false];
