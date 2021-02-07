@@ -21,10 +21,12 @@
                 return;
             }
 
-            if(file_exists(self::$path . $name))
+            if(!file_exists(self::$path . $name))
             {
-                include_once self::$path . $name;
+                die('Could not load "'.$name.'"');
             }
+
+            include_once self::$path . $name;
         }
 
         /*

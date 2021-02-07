@@ -14,7 +14,7 @@
          * Get config
          */
 
-        public function get(string $key) : string
+        public function getConfig(string $key) : string
         {
             return $this->config[$key] ?? '';
         }
@@ -23,10 +23,24 @@
          * Set config
          */
 
-        public function set(string $key, string $value) : Config
+        public function setConfig(string $key, string $value) : Config
         {
             $this->config[$key] = $value;
 
             return $this;
+        }
+
+        /*
+         * Set property
+         */
+
+        public function setProperty(string $key, object $value) : void
+        {
+            if(isset($this->{$key}))
+            {
+                return;
+            }
+
+            $this->{$key} = $value;
         }
     }
