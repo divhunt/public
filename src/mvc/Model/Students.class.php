@@ -27,7 +27,9 @@
 
         public function getStudent(int $id) 
         {
-            if(!$data = $this->qb->get( '*', 'students',  'INNER JOIN school_boards ON students.student_school_board_id = school_boards.school_board_id', ['student_id' => $id],  ['limit' => 1])[0] ?? false)
+            $join = 'INNER JOIN school_boards ON students.student_school_board_id = school_boards.school_board_id';
+            
+            if(!$data = $this->qb->select('*', 'students', $join, ['student_id' => $id],  ['limit' => 1])[0] ?? false)
             {
                 return false;
             }
@@ -50,7 +52,7 @@
 
         public function getStudentGrades(int $id) 
         {
-            $data = $this->qb->get( '*', 'grades', false, ['grade_student_id' => $id]);
+            $data = $this->qb->select( '*', 'grades', false, ['grade_student_id' => $id]);
             $grades = [];
 
             foreach($data as $grade)
@@ -71,14 +73,14 @@
 
         public function getStudentFinalCSM(array $grades) : array
         {
-            $result = ['total' => 0, 'average' => null, 'pass' => 'Fail'];
+            $result = ['sum' => 0, 'total' => count($grades), 'average' => null, 'pass' => 'Fail'];
             
             foreach($grades as $grade)
             {
-                $result['total'] += $grade['value'];
+                $result['sum'] += $grade['value'];
             }
 
-            $result['average'] = floatval($result['total'] / count($grades));
+            $result['average'] = floatval($result['sum'] / $result['total']);
 
             if($result['average'] >= 7)
             {
@@ -104,14 +106,14 @@
                 array_shift($grades);
             }
 
-            $result = ['total' => 0, 'average' => null, 'pass' => 'Fail'];
+            $result = ['sum' => 0, 'total' => count($grades), 'average' => null, 'pass' => 'Fail'];
 
             foreach($grades as $grade)
             {
-                $result['total'] += $grade['value'];
+                $result['sum'] += $grade['value'];
             }
 
-            $result['average'] = floatval($result['total'] / count($grades));
+            $result['average'] = floatval($result['sum'] / $result['total']);
 
             if(end($grades)['value'] > 8)
             {

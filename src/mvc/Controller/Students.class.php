@@ -21,9 +21,7 @@
 
         public function getStudent(int $id)
         {
-            $student = $this->model->getStudent($id);
-
-            if(!$student)
+            if(!$student = $this->model->getStudent($id))
             {
                 include $this->renderView('students/student/not-found'); return;
             }
@@ -31,11 +29,7 @@
             $board = strtoupper($student['school_board']['name']);
 
             $student['grades'] = $this->model->getStudentGrades($student['id']);
-
-            $result = $this->model->{"getStudentFinal{$board}"}($student['grades']);
-
-            $student['average_score'] = $result['average'];
-            $student['final_result']  = $result['pass'];
+            $student['grades_result'] = $this->model->{"getStudentFinal{$board}"}($student['grades']);
 
             include $this->renderView('students/student/' . strtolower($student['school_board']['name']));
         }

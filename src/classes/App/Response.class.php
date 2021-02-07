@@ -23,23 +23,29 @@
         {
             header('Content-type: application/xml');
             
-            echo xmlBuild($data, '', $xml);
+            echo $this->xmlBuild($data, '', $xml);
         }
-    }
 
-    function xmlBuild($array, $parentkey = '', $xml = false)
-    {
-        foreach($array as $key => $value)
+        /*
+         * Builder XML response
+         */ 
+
+        public function xmlBuild($array, $parentkey = '', $xml = false)
         {
-            if(is_array($value))
+            foreach($array as $key => $value)
             {
-                xmlBuild($value, is_numeric((string) $key) ? ('n' . $key) : $key, $xml->addChild(is_numeric((string) $key) ? $parentkey : $key));
-            } 
-            else 
-            {
-                $xml->addAttribute(is_numeric((string) $key) ? ('n' . $key) : $key, $value);
+                if(is_array($value))
+                {
+                    $this->xmlBuild($value, is_numeric((string) $key) ? ('n' . $key) : $key, $xml->addChild(is_numeric((string) $key) ? $parentkey : $key));
+                } 
+                else 
+                {
+                    $xml->addAttribute(is_numeric((string) $key) ? ('n' . $key) : $key, $value);
+                }
             }
-        }
 
-        return $xml->asXML();
+            return $xml->asXML();
+        }
     }
+
+    

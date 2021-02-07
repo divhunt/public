@@ -6,12 +6,20 @@
 
     class QB extends Connection
     {
+        /*
+         * Prepare query builder with connection data
+         */ 
+
         public function __construct(string $host, string $user, string $pass, string $base, bool $persistent = false)
         {
             $this->setup($host, $user, $pass, $base, $persistent);
         }
 
-        public function get(string $select, string $table, string $joins, array $search = [], array $options = [])
+        /*
+         * Process query seelect
+         */ 
+
+        public function select(string $select, string $table, string $joins, array $search = [], array $options = [])
         {
             $query = "SELECT {$select} FROM {$table} {$joins}";
 
