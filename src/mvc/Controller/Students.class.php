@@ -7,16 +7,10 @@
     class Students extends Controller
     {
         /*
-         * Model
+         * Set model
          */
 
-        private $model;
-
-        /*
-         * Construct 
-         */
-
-        public function __construct()
+        public function model()
         {
             $this->model = new \mvc\Model\Students();
         }
@@ -25,8 +19,13 @@
          * Signle student
          */
 
-        public function student($id)
+        public function getStudent(int $id)
         {
-            echo "asdasdsa";
+            $student = $this->model->getStudent($id);
+
+            // if($student)
+            // {
+            //     include $this->renderView('students/student');
+            // }
         }
     }

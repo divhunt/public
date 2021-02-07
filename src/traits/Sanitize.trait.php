@@ -1,5 +1,7 @@
 <?php
 
+    namespace traits;
+
     Trait Sanitize
     {
         /*
@@ -8,7 +10,7 @@
 
         public function sanitizeString(string $string) : string
         {
-            return htmlspecialchars($string, ENT_QUOTE);
+            return htmlspecialchars($string, ENT_QUOTES);
         }
 
         /*

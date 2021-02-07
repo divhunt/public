@@ -4,5 +4,5 @@
     {    
         $controller = new \mvc\Controller\Students();
 
-        print_r($controller);
+        $controller->getStudent((int)$id);
     });

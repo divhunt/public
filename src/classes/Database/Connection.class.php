@@ -16,17 +16,17 @@
          * Construct class and set connection data
          */        
 
-        public function __construct(string $host, string $user, string $pass, string $base, bool $persistent = false)
+        public function setup(string $host, string $user, string $pass, string $base, bool $persistent = false) : void
         {
-            $this->set('host', $host);
-            $this->set('user', $user);
-            $this->set('pass', $pass);
-            $this->set('base', $base);
-            $this->set('persistent', '');
+            $this->setConfig('host', $host);
+            $this->setConfig('user', $user);
+            $this->setConfig('pass', $pass);
+            $this->setConfig('base', $base);
+            $this->setConfig('persistent', '');
 
             if($persistent)
             {
-                $this->set('persistent', 'P:');
+                $this->setConfig('persistent', 'P:');
             }
         }
 
@@ -34,11 +34,11 @@
          * Connect to database once needed
          */        
 
-        public function connect() : void
+        public function connect() : object
         {
             if($this->conn)
             {
-                return;
+                return $this->conn;
             }
 
             try
@@ -46,7 +46,14 @@
                 $conn = mysqli_init();
 
                 $conn->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
-                $conn->real_connect($this->get('persistent') . $this->get('host'), $this->get('user'), $this->get('pass'), $this->get('base'));
+
+                $conn->real_connect(
+                    $this->getConfig('persistent') . $this->getConfig('host'), 
+                    $this->getConfig('user'), 
+                    $this->getConfig('pass'), 
+                    $this->getConfig('base')
+                );
+                
                 $conn->set_charset('utf8');
 
                 if($conn->connect_error)
@@ -60,5 +67,33 @@
             {
                 echo $e->getMessage();
             }
+
+            return $conn;
+        }
+
+        /*
+         * Protect from SQL Injection
+         */
+
+        public function sqlProtect($value)
+        {
+            if($value === null || empty($value) || !$value)
+            {
+                return null;
+            }
+
+            if(strtolower($value) === 'null')
+            {
+                return null;
+            }
+
+            if(is_array($value) || is_object($value))
+            {
+                $value = json_encode($value);
+            }
+            
+            $value = $this->connect()->real_escape_string($value);
+
+            return "'" . $value . "'";
         }
     }
