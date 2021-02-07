@@ -12,13 +12,4 @@
         {
             return htmlspecialchars($string, ENT_QUOTES);
         }
-
-        /*
-         * Sanitize int
-         */
-
-        public function sanitizeInt(int $int) : int
-        {
-            return (int) $int;
-        }
     }

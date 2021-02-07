@@ -26,5 +26,6 @@
         {
             global $app;
 
+            return $app->getConfig('path') . '/view/' . $view . '/view.php';
         }
     }

@@ -37,9 +37,9 @@
 
             $array = [];
 
-            while($row = $query->fetch_assoc())
+            $i = 0; while($row = $query->fetch_assoc())
             {
-                $i = 0; $array[$i] = $row; $i++;
+                $array[$i] = $row; $i++;
             }
 
             return $array;
