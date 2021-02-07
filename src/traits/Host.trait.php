@@ -7,7 +7,7 @@
         use \traits\Validate;
 
         /*
-         * Get host
+         * Get uri string
          */ 
 
         public function getUri() : string
@@ -15,6 +15,15 @@
             $uri = explode('?', ($_SERVER['REQUEST_URI'] ?? false))[0] ?? '/';
 
             return $this->validateStringPass('a-z\.A-z_0-9\/\-', $uri);
+        }
+
+        /*
+         * Get uri array
+         */ 
+
+        public function getUriArray() : array
+        {
+            return array_values(array_filter(explode('/', $this->getUri())));
         }
 
         /*

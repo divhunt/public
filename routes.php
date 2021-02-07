@@ -2,5 +2,7 @@
     
     $app->route->match('GET', '/students/:id', function($id)
     {    
-        echo "match";
+        $controller = new \mvc\Controller\Students();
+
+        print_r($controller);
     });

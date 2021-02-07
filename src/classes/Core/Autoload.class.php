@@ -44,6 +44,10 @@
                     $data['ext'] = '.class.php';
                     break;
 
+                case 'mvc':
+                    $data['ext'] = '.class.php';
+                    break;
+
                 case 'traits':
                     $data['ext'] = '.trait.php';
                     break;
